@@ -1,0 +1,235 @@
+.sidebar{
+    position: absolute;
+    left: 0;
+    top: 0;
+    display: none;
+    width: 100%;
+    height: 100vh;
+    background-color: #327daf;
+}
+
+.sidebar.active{
+    display: inline-block;
+}
+
+.sidebar > .logo{
+    height: 175px;
+    position: relative;
+    width: 100%;
+    display: inline-block;
+    background-image: url(../image/Logo_PopupMenu.png), url(../image/Line.png);
+    background-repeat: no-repeat, no-repeat;
+    background-size: 275px, contain;
+    background-position: center, bottom;
+    background-color: #29638b;
+}
+
+.sidebar > .logo > a{
+    float: right;
+    margin-top: 12px;
+    margin-right: 20px;
+
+}
+
+.sidebar > .main-nav{
+    display: flex;
+    background-image: url(../image/Line2.png);
+    background-position:  bottom;
+    background-repeat: no-repeat;
+    padding-bottom: 2px;
+    background-size: contain;
+}
+
+.sidebar > .main-nav > a,
+.sidebar > .main-nav > span{
+    text-decoration: none;
+    color: white;
+    margin: 0 auto;
+    display: block;
+    line-height: 30px;
+    cursor: pointer;
+    
+}
+
+.sidebar > .second-nav{
+    padding-top: 40px;
+}
+
+.sidebar > .second-nav ul{
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    text-align: center;
+    overflow: hidden;
+}
+
+.sidebar > .second-nav ul li{
+    margin-bottom: 30px;
+    display: inline-block;
+    width: 100%;
+    
+}
+
+.sidebar > .second-nav ul li a{
+    text-decoration: none;
+    color: black;
+    font-size: 20px;
+    display: none;
+    width: 100%;
+}
+
+.sidebar > .second-nav ul li a.slideInRight{
+    display: inline-block;
+}
+
+
+.box-popup > .popup-content > .register.content .box-form > .form-group > div > div {
+    margin-left: 10px;
+    position: relative;
+    width: 20px;
+    height: 20px;
+    background-color: #3790d6;
+    border-radius: 50%;
+    border: 1px solid black;
+}
+
+.box-popup > .popup-content > .register.content .box-form > .form-group > div > div > span{
+    display: none;
+}
+
+.box-popup > .popup-content > .register.content .box-form > .form-group > div > div:hover > span{
+    position: absolute;
+    display: block;
+    right: 0;
+    text-align: left;
+    padding: 8px 4px;
+    border-radius: 5px;
+    top: 26px;
+    z-index: 1;
+    right: -1.2em;
+    width: 270px;
+    /* height: 48px; */
+    color: #ff9c00;
+    text-shadow: 2px 1px 2px #000;
+    font-size: 11px;
+    font-weight: 900;
+    background-color: #447190;
+    border: 1px solid black;
+
+}
+
+.box-popup > .popup-content > .register.content .box-form > .form-group > div > div::before{
+    content: "!";
+    /* position: absolute; */
+    /* left: 50%; */
+    /* top: 50%; */
+    display: inline-block;
+    width: 22px;
+    height: 22px;
+    text-align: center;
+    color: white;
+    line-height: 23px;
+    /* transform: translate(-50%); */
+}
+
+.box-popup > .popup-content > .content:not(.register) >  .box-form > .form-group > div > div {
+    margin-left: 0;
+    margin-top: 20px;
+}
+
+.box-popup > .popup-content > .content .box-form > .form-group > div > div.box-btn-amount > button{
+    margin-top: 10px;
+}
+
+.select-trans{
+    position: absolute;
+    bottom: 36px;
+    right: 5px;
+    cursor: pointer;
+    font-size: 12px;
+    bottom: 5px;
+    z-index: 2;
+}
+.select-trans> div{
+    position: relative;
+}
+
+.select-trans> div > ul{
+    list-style: none;
+    top: 100%;
+    left: 0;
+    width: 100%;
+    position: absolute;
+    background-color: rgba(0,0,0,0.7);
+    box-sizing: content-box;
+    display: none;
+    border: 1px solid black;
+}
+
+.select-trans:hover > div > ul{
+display: block;
+}
+
+.select-trans> div > ul > li{
+    display: inline-block;
+    height: 26px;
+    width: 100%;
+    line-height: 26px;
+    vertical-align: top;
+    color: #a0a0a0;
+    transition: none;
+}
+
+.select-trans> div > ul > li:hover{
+    background-color: rgba(0,0,0,0.5);
+
+}
+
+.select-trans> div > ul > li > img{
+    margin-top: -3px;
+    float: left;
+    margin-left: 2px;
+    margin-right: 2px;
+}
+
+.select-trans> div > ul > li.en{
+    
+}
+
+.select-trans> div > div{
+    display: inline-block;
+    width: 115px;
+    border: 1px solid #a0a0a0;
+    height: 26px;
+    text-align: left;
+    position: relative;
+}
+
+.select-trans> div > div::after{
+    content: '';
+    position: absolute;
+    right: 10px;
+    top: 50%;
+    display: block;
+    border-left: 2px solid #a0a0a0;
+    border-top: 2px solid #a0a0a0;
+    width: 5px;
+    height: 5px;
+    float: right;
+    transform: translate(50%, -50%) rotate(-135deg);
+    
+}
+
+
+.select-trans> div > div > span{
+    line-height: 26px;
+    vertical-align: top;
+    color: #a0a0a0;
+}
+
+.select-trans> div > div > img{
+    margin-top: -3px;
+    float: left;
+    margin-left: 2px;
+    margin-right: 2px;
+}

@@ -1,0 +1,499 @@
+
+
+
+
+
+
+
+
+header > .top > .inner > .no-auth {
+    float: right;
+    padding: 9px 0;
+
+}
+
+
+
+
+.burger{
+    height: 28px;
+    width: 30px;
+    float: right;
+    margin-left: 5px;
+    margin-top: 13px;
+    display: none;
+}
+
+.burger > span{
+    width: 30px;
+    display: block;
+}
+.burger > span:nth-child(odd){
+    height: 5px;
+    width: 30px;
+    background-color: #1f1916;
+    border-radius: 10px;
+}
+
+
+.burger > span:nth-child(even){
+    height: 5px;
+}
+
+
+
+
+@media only screen and (max-width: 1200px){
+
+    .bee-hive > .right{
+        max-width: 100%!important;
+    }
+    header > .top > .inner > .logo{
+        float: left;
+    }
+    .bee-hive > .left{
+        display: none;
+    }
+
+
+    header > .bottom > .inner> .scroll{
+        text-align: center;
+    }
+    
+    header > .top > .inner > .no-auth{
+        float: none;
+        display: inline-block;
+        vertical-align: top;
+    }
+
+    header > .top > .inner{
+        text-align: center;
+    }
+
+    .burger{
+        display: inline-block;
+    }
+    .info{
+        left: 0!important;
+    }
+
+    .desktop{
+        display: none!important;
+    }
+
+    .mobile{
+        display: initial;
+    }
+
+    header > .top > .inner{
+        padding: 0  ;
+        text-align: center;
+    }
+
+    header > .bottom > .inner > .scroll > a > span{
+        width: 125px!important;
+    }
+    header > .bottom > .inner> .scroll  > a,
+    header > .bottom > .inner > .scroll > a > span,
+    header > .bottom{
+        height: 93px!important;
+    }
+
+    header > .bottom{
+        height: 50px;
+    }
+
+    header > .bottom > .inner> .scroll  > a:not(:last-child){
+        margin-right: 20px;
+    }
+    
+    /* header > .bottom > .inner > .scroll > a.oz > span{
+        background-image: url(../image/Mobile/CompanySelect_Oz.png);
+    }
+    
+    header > .bottom > .inner > .scroll > a.cod > span{
+        background-image: url(../image/casino/cod.png);
+    }
+
+    header > .bottom > .inner > .scroll > a.ez > span{
+        background-image: url(../image/Mobile/CompanySelect_Ez.png);
+    }
+    
+    header > .bottom > .inner > .scroll > a.eight > span{
+        background-image: url(../image/Mobile/CompanySelect_88.png);
+    }
+    
+    header > .bottom > .inner > .scroll > a.evo > span{
+        background-image: url(../image/Mobile/CompanySelect_Evol.png);
+    }
+    
+    header > .bottom > .inner > .scroll > a.midas > span{
+        background-image: url(../image/Mobile/CompanySelect_Midas.png);
+    }
+    
+    header > .bottom > .inner > .scroll > a.solaire > span{
+        background-image: url(../image/casino/solaire.png);
+    }
+    
+    header > .bottom > .inner > .scroll > a.okada > span{
+        background-image: url(../image/casino/okada.png);
+    } */
+}
+
+@media only screen and (min-width : 1920px){
+    .bee-hive{
+
+        max-width: 1200px;
+    }
+}
+
+@media only screen and (max-width : 1380px) {
+    .info{
+        left: 0!important;
+    }
+}
+
+
+@media only screen and (max-width : 1920px) and (min-width : 1200px){
+
+    .bee-hive > .left{
+        width: calc(100% - 1200px)!important;
+    }
+
+    .bee-hive > .left > .in{
+        width: 100%;
+    }
+
+    .bee-hive{
+        max-width: initial;
+    }
+    .bee-hive > .right{
+        width:1200px!important;
+        max-width: initial!important;
+    }
+
+    .bee-hive > .right > .in{
+        width: 1200px!important;
+    }
+}
+
+@media only screen and (max-width : 1200px) {
+    .game-container > .ez.sh {
+        left: 315px!important;
+        top: 632px!important;
+        z-index: 2;
+    }
+
+    .game-container > .ez.kv {
+        left: 639px!important;
+        top: 632px!important;
+        z-index: 2;
+    }
+
+    .bee-hive > .right > .game-container,
+        .bee-hive > .right > .in{
+        height: 850px!important;
+    }
+}
+
+@media only screen and (max-width : 1000px){
+    .game-container > .ez.ws {
+        left: 157px!important;
+        top: 714px!important;
+        z-index: 2;
+    }
+
+    .game-container > .ez.fl {
+        left: 475px!important;
+        top: 714px!important;
+        z-index: 2;
+    }
+
+    .game-container > .md.bc {
+        left: 317px!important;
+        top: 802px!important;    
+    }
+
+    .game-container > .ei.bc {
+        left: 637px!important;
+        top: 802px!important;
+    }
+
+    
+    .bee-hive > .right > .game-container,
+        .bee-hive > .right > .in{
+        height: 1030px!important;
+    }
+    .bee-hive > .right > .game-container,
+    .bee-hive > .right > .in{
+        height: 1295px!important;
+}
+}
+
+@media only screen and (max-width : 867px){
+
+
+    .game-container > .evo.bc {
+        left: 156px!important;
+        top: 192px!important;
+    }
+
+    .game-container > .oz.oe {
+        left: 155px!important;
+        top: 368px!important;
+    }
+
+    .game-container > .oz.gs {
+        left: 475px!important;
+        top: 368px!important;
+    }
+
+    .game-container > .md.bc {
+        left: 317px!important;
+        top: 802px!important;    
+    }
+
+    .game-container > .ei.bc {
+        left: 637px!important;
+        top: 802px!important;
+    }
+
+    .game-container > .ez.fp {
+        left: 157px!important;
+        top: 889px!important;
+        z-index: 3;
+    }
+        
+    .game-container > .ez.td {
+        left: 317px!important;
+        top: 802px!important;
+    }
+    
+    .game-container > .ez.md {
+        left: 476px!important;
+        top: 888px!important;    
+    }
+
+    .game-container > .ez.kv {
+        left: 157px!important;
+        top: 1062px!important; 
+    }
+
+    .game-container > .md.bc {
+        left: 317px!important;
+        top: 974px!important;   
+    }
+
+    .game-container > .ei.bc {
+        left: 476px!important;
+        top: 1062px!important; 
+    }
+
+
+
+    
+}
+
+@media only screen and (max-width : 678px){
+
+
+    .hex {
+        margin-right: 90px!important;
+    }
+    .hex-container:nth-child(even) {
+        margin-left: 89px!important;
+    }
+    .hex-container:nth-child(odd) {
+        margin-left: -116px!important;
+    }
+
+    .hex-container{
+        margin-top: -80px!important;
+    }
+    .game-container > .evo.rou,
+    .game-container > .evo.bc,
+    .game-container > .oz.oe,
+    .game-container > .ez.fs,
+    .game-container > .ez.ws,
+    .game-container > .ez.fp,
+    .game-container > .ez.kv {
+        left: 63px!important;
+    }
+
+    .game-container > .evo.bj,
+    .game-container > .oz.bc,
+    .game-container > .ez.dr,
+    .game-container > .ez.sh,
+    .game-container > .ez.td,
+    .game-container > .md.bc{
+        left: 199px!important;
+    }
+
+    .game-container > .evo.ch,
+    .game-container > .oz.nn,
+    .game-container > .oz.gs,
+    .game-container > .ez.dd,
+    .game-container > .ez.fl,
+    .game-container > .ez.md,
+    .game-container > .ei.bc {
+        left: 338px!important
+    }
+    .hex-container:nth-child(even) {
+        margin-left: 21px!important;
+    }
+
+    .game-container > .evo.rou {
+        top: -8px!important;
+    }
+    
+    .game-container > .evo.bc {
+        top: 151px!important;
+    }
+    .game-container > .oz.oe {
+        top: 309px!important;
+    }
+
+    .game-container > .ez.fs {
+        top: 468px!important;
+    }
+
+    .game-container > .ez.ws {
+        top: 624px!important;
+    }
+
+    .game-container > .ez.fp {
+        top: 786px!important;
+    }
+    .game-container > .ez.kv {
+        top: 941px!important;
+    }
+
+
+    .game-container > .evo.ch {
+        top: -8px!important;
+    }
+    
+    .game-container > .oz.nn {
+        top: 151px!important;
+    }
+    .game-container > .oz.gs {
+        top: 309px!important;
+    }
+
+    .game-container > .ez.dd {
+        top: 468px!important;
+    }
+
+    .game-container > .ez.fl {
+        top: 624px!important;
+    }
+
+    .game-container > .ez.md {
+        top: 786px!important;
+    }
+    .game-container > .ei.bc {
+        top: 941px!important;
+    }
+
+    .game-container > .ez.dr {
+        top: 393px;
+    }
+
+    .game-container > .ez.sh {
+        top: 552px!important;
+    }
+
+    .game-container > .ez.td {
+        top: 706px!important;
+    }
+
+    .game-container > .md.bc {
+        top: 864px!important;
+    }
+    
+    
+    
+
+    .game-container > .evo.bj {
+        top: 72px!important;
+    }
+
+    .game-container > .oz.bc {
+        left: 315px;
+        top: 230px!important;
+    }
+}
+
+@media only screen and (max-width : 505px){
+
+
+    .game-container > .evo.ch {
+        left: 202px!important;
+        top: 231px!important;
+    }
+    .game-container > .oz.bc {
+        z-index: 2;
+        top: 390px!important;
+    }
+
+    .game-container > .oz.gs {
+        top: 544px!important;
+        left: 199px!important;
+    }
+
+    .game-container > .ez.dr {
+        top: 1179px;
+
+    }
+    .game-container > .oz.nn{
+        top: 468px!important;
+        left: 63px!important;
+        z-index: 2;
+    }
+
+    .game-container > .ez.sh,
+    .game-container > .ez.fl,
+    .game-container > .ei.bc,
+    .game-container > .ez.fs {
+        left: 199px!important;
+    }
+
+
+    .game-container > .ez.sh{
+        top: 864px!important;
+        
+    }
+
+    .game-container > .ez.dd{
+        left: 63px!important;
+        top: 1101px!important;
+    }
+
+    .game-container > .ez.fl{
+        top: 1019px!important;
+    }
+
+    .game-container > .ez.md{
+        left: 63px!important;
+        top: 1258px!important;
+    }
+
+    .game-container > .ei.bc{
+        top: 1493px!important;
+    }
+
+    .game-container > .md.bc{
+        left: 63px!important;
+        top: 1416px!important;
+    }
+
+    .game-container > .ez.fs {
+        top: 1335px!important;
+    }
+
+    
+    .bee-hive > .right > .game-container, .bee-hive > .right > .in {
+        height: 1723px!important;
+    }
+
+}

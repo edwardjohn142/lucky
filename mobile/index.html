@@ -1,0 +1,220 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Lucky 7</title>
+    <link rel="stylesheet" type="text/css" href="css/style.css">
+    <link rel="stylesheet" type="text/css" href="css/auth.css">
+    <link rel="stylesheet" type="text/css" href="css/animate.css">
+    <link rel="stylesheet" type="text/css" href="../global/css/sweetalert/sweetalert.css">
+    <link rel="stylesheet" type="text/css" href="css/pop.css">
+    <link rel="stylesheet" type="text/css" href="css/sidebar.css">
+    <script type="text/javascript" src="../global/js/jquery-3.3.1.min.js"></script>
+	<script type="text/javascript" src="../global/js/jquery-ui.min.js"></script>
+	<!-- <script type="text/javascript" src="../global/js/jquery-1.11.0.min.js"></script> -->
+	<script type="text/javascript" src="../global/js/angular.min.js"></script>
+    <title>Lucky 7</title>
+
+</head>
+<body ng-app="projectChaos" ng-controller="mainCtrl">
+    <header>
+        <a href="" class="logo"><img src="./image/Logo_Header.png"  alt=""></a>
+        <div class="sign-in not-authenticated" >
+            <a href="" ng-click="toggleModal('register',true, '')"  class="head-register custom-round" ng-bind="trans.login_register"></a>
+            <a href="" onclick="toggleAuth()"  class="head-sign custom-round">{{trans.login}}</a>
+        </div>
+        <div class="user-info authenticated">
+            <span  class="custom-round username" ng-bind="profile_info.username" class="username">--</span>
+            <span  class="custom-round money" ng-bind="profile_info.money | number " class="money">--</span>
+        </div>
+        <a href="" onclick="toggleSideBar()" class="burger">
+            <span></span>
+            <span></span>
+            <span></span>
+            <span></span>
+            <span></span>
+        </a>
+    </header>
+    <section class="company-nav">
+        <div class="bottom">
+            <div class="inner">
+                <div class="scroll">
+                    <a href=""  ng-click="launchGame('oz');" class="oz"><span></span></a>
+                    <a href="" ng-click="launch('rg')" class="ez"><span></span></a>
+                    <a href=""  ng-click="launchGame('md');" class="midas"><span></span></a>
+                    <a href="" ng-click="launchGame('eight');" class="eight"><span></span></a>
+                    <a ng-click="launch('evo', 'popup')" href="" class="evo"><span></span></a>
+                    <a href="" ng-click="pending()" class="cod"><span></span></a>
+                    <a href="" ng-click="pending()" class="okada"><span></span></a>
+                    <a href="" ng-click="pending()" class="solaire"><span></span></a>
+                </div>
+            </div>
+        </div>
+    </section>
+    <section class="banner">
+        <div class="inner">
+
+            <div class="content">
+                <div class="line">
+                 <img src="./image/Picture_Title.png " alt="" width="50%">
+                 <span>세계 최고의 온라인 카지노 솔루션</span>
+                 <p>럭키세븐 카지노는 글로벌 대형 카지노 업체들과의 <br>
+                     라이센스를 체결, 다양한 서비스를 저공하고 있습니다.</p>
+                </div>
+             </div>
+        </div>
+    </section>
+    <section class="live-casino header">
+        <div class="head"><span>LIVE CASINO GAMES</span> </div>
+        <div class="content">
+            <div>
+                <a href="" ng-click="launch('evo', 'popup')"><img src="./image/Banner_Evol_01.png" alt="" ></a>
+                <a href="" ng-click="launch('evo', 'popup')"><img src="./image/Banner_Evol_02.png" alt="" ></a>
+                <a href="" ng-click="launch('evo', 'popup')"><img src="./image/Banner_Evol_03.png" alt="" ></a>
+                <a href="" ng-click="launch('evo', 'popup')"><img src="./image/Banner_Evol_04.png" alt="" ></a>
+                <a href="" ng-click="launchGame('oz');"><img src="./image/Banner_Oz_01.png" alt="" ></a>
+                <a href="" ng-click="launchGame('oz');"><img src="./image/Banner_Oz_02.png" alt="" ></a>
+                <a href="" ng-click="launchGame('oz');"><img src="./image/Banner_Oz_03.png" alt="" ></a>
+                <a href="" ng-click="launchGame('oz');"><img src="./image/Banner_Oz_04.png" alt="" ></a>
+                <a href="" ng-click="launchGame('md');" ><img src="./image/Banner_Midas.png" alt="" ></a>
+                <a href="" ng-click="launchGame('eight');"><img src="./image/Banner_88.png" alt="" ></a>
+            </div>
+        </div>
+    </section>
+    <section class="reel-games header">
+        <div class="head"><span>REEL GAMES</span> </div>
+        <div class="content">
+            <div>
+                <a href="" ng-click="launch('rg')"><img src="./image/Banner_Ez_01.png" alt="" ></a>
+                <a href="" ng-click="launch('rg')"><img src="./image/Banner_Ez_02.png" alt="" ></a>
+                <a href="" ng-click="launch('rg')"><img src="./image/Banner_Ez_03.png" alt="" ></a>
+                <a href="" ng-click="launch('rg')"><img src="./image/Banner_Ez_04.png" alt="" ></a>
+                <a href="" ng-click="launch('rg')"><img src="./image/Banner_Ez_05.png" alt="" ></a>
+                <a href="" ng-click="launch('rg')"><img src="./image/Banner_Ez_06.png" alt="" ></a>
+                <a href="" ng-click="launch('rg')"><img src="./image/Banner_Ez_07.png" alt="" ></a>
+                <a href="" ng-click="launch('rg')"><img src="./image/Banner_Ez_08.png" alt="" ></a>
+                <a href="" ng-click="launch('rg')"><img src="./image/Banner_Ez_09.png" alt="" ></a>
+                <a href="" ng-click="launch('rg')"><img src="./image/Banner_Ez_10.png" alt="" ></a>
+            </div>
+        </div>
+    </section>
+
+    <section class="support-menu header">
+        <div class="head"><span>SUPPORT MENU</span> </div>
+        <img src="./image/SupportMenu_BG.png" alt="" >
+        <div class="content">
+            <div>
+                <a href="" ng-click="toggleModal('security',true,'badge')"><span>{{trans.badge.security}}</span><span class="small-text"  ng-if="trans.icon != 'en'">SECURITY ACCOUNT</span></a>
+                <a href=""  ng-click="toggleModal('remote',true,'badge')"><span>{{trans.badge.support}}</span><span class="small-text"  ng-if="trans.icon != 'en'">REMOTE SUPPORT</span></a>
+                <a href="" ng-click="toggleModal('safety',true,'badge')"><span>{{trans.badge.safety}}</span><span class="small-text"  ng-if="trans.icon != 'en'">SAFETY</span></a>
+                <a href=""  ng-click="toggleModal('contact',true,'badge')"><span>{{trans.badge.contact}}</span><span class="small-text"  ng-if="trans.icon != 'en'">CONTACT US</span></a>
+                <img src="./image/Logo_Footer.png" alt="">
+            </div>
+        </div>
+        <!-- <div class="content">
+            <div>
+                <a href=""><img src="./image/Mobile/Banner_Ez_01.png" alt="" ></a>
+                <a href=""><img src="./image/Mobile/Banner_Ez_02.png" alt="" ></a>
+                <a href=""><img src="./image/Mobile/Banner_Ez_03.png" alt="" ></a>
+                <a href=""><img src="./image/Mobile/Banner_Ez_04.png" alt="" ></a>
+                <a href=""><img src="./image/Mobile/Banner_Ez_05.png" alt="" ></a>
+                <a href=""><img src="./image/Mobile/Banner_Ez_06.png" alt="" ></a>
+                <a href=""><img src="./image/Mobile/Banner_Ez_07.png" alt="" ></a>
+                <a href=""><img src="./image/Mobile/Banner_Ez_08.png" alt="" ></a>
+                <a href=""><img src="./image/Mobile/Banner_Ez_09.png" alt="" ></a>
+                <a href=""><img src="./image/Mobile/Banner_Ez_10.png" alt="" ></a>
+            </div>
+        </div> -->
+    </section>
+<div class="sidebar" id="sidebar">
+    <div class="logo">
+        <div class="select-trans">
+            <div>
+                <div><img ng-src="../global/images/32/{{trans.flag  ?  trans.flag : 'South-Korea'}}.png" alt=""><span> {{trans.language}}</span></div>
+                <ul>
+                    <li class="ch {{current_language == 'ch' ? 'active ch':'ch'}}" ng-click="translate('ch')"><img src="../global/images/32/China.png" alt=""> CH</li>
+                    <li class="kr {{current_language == 'kr' ? 'active kr':'kr'}}" ng-click="translate('kr')"><img src="../global/images/32/South-Korea.png" alt=""> KR</li>
+                    <li class="en {{current_language == 'en' ? 'active en':'en'}}" ng-click="translate('en')"><img src="../global/images/32/United-Kingdom.png" alt=""> EN</li>
+                    <li class="jp {{current_language == 'jp' ? 'active jp':'jp'}}" ng-click="translate('jp')"><img src="../global/images/32/Japan.png" alt=""> JP</li>
+                    <li class="th {{current_language == 'th' ? 'active jp':'th'}}" ng-click="translate('th')"><img src="../global/images/32/Thailand.png" alt=""> TH</li>
+                </ul>
+            </div>
+        </div>
+        <a href=""  onclick="toggleSideBar()"><img width="25" src="./image/Close_Button.png" alt=""></a>
+    </div>
+    <div class="main-nav  desktop">
+        <a href="" ng-click="toggleModal('help_desk',true, 'helpDeskList');menuModal('helpDeskWrite', '');"><span>{{trans.customer_service}}</span></a>
+        <span  class="divider authenticated">|</span>
+        <a href="" class="authenticated" ng-click="toggleModal('account',true, 'account')"><span>{{trans.account}}</span></a>
+        <span  class="divider authenticated">|</span>
+        <a class="authenticated" href=""  ng-click="toggleModal('money_history',true, 'transRecord')"><span>{{trans.deposit_withdraw_details}}</span></a>
+        <span  class="divider authenticated">|</span>
+        <a class="authenticated" href="" ng-click="logout()"><span>{{trans.logout}}</span></a>
+    </div>
+    <div class="second-nav">
+        <ul>
+            <li class="authenticated" ><a href="" ng-click="profile_info.has_message != 0 ? toggleModal('memo',true, 'memoList') : toggleModal('money_deposit',true, 'deposit')" class="a-secondary-nav animated ">{{trans.deposit}}</a></li>
+            <li class="authenticated" ><a href="" ng-click="toggleModal('money_withdraw',true, 'withdraw')" class="a-secondary-nav animated ">{{trans.withdraw}}</a></li>
+            <li class="authenticated" ><a href="" ng-click="toggleModal('points_form_logs',true, 'pointsForm')" class="a-secondary-nav animated ">{{trans.point_management}}</a></li>
+            <li class="" ><a href="" ng-click="toggleModal('event_history',true, 'eventList')" class="a-secondary-nav animated ">{{trans.events}}</a></li>
+            <li class="" ><a href="" ng-click="toggleModal('message_history',true, 'messageList')" class="a-secondary-nav animated ">{{trans.notice}}</a></li>
+            <li class="" ><a href="" ng-click="toggleModal('game_guide',true, 'gBaccarat')" class="a-secondary-nav animated ">{{trans.game_guide}}</a></li>
+            <li class="authenticated" ><a href=""ng-click="toggleModal('coupon',true, 'coupon');menuModal('coupon', '');" class="a-secondary-nav animated ">{{trans._coupon.title}}</a></li>
+            <li class="authenticated" ><a href="" ng-click="toggleModal('memo',true, 'memoList');menuModal('memoList', '');" class="a-secondary-nav animated ">{{trans.check_note}}</a></li>
+        </ul>
+    </div>
+</div>
+<div class="pop-auth" id="pop_auth">
+    <div>
+        <div class="logo" style="display:inline-block; width:100%">
+            <a href=""  onclick="toggleAuth()"><img width="20" src="./image/Close_Button.png" alt=""></a>
+        </div>
+        <div style="    text-align: center; display: inline-block; width: 100%; margin: 60px 0 30px; font-size: 15px;">
+            SIGN IN TO YOUR ACCOUNT
+        </div>
+        <div class="main">
+            <div class="logo">
+                <img  src="./image/Logo_PopupMenu.png" style="max-height:105px" alt="">
+            </div>
+            <div class="auth-inner">
+                <input ng-enter="login(login_username,login_password,trans)"  ng-model="login_username"  type="text" placeholder="{{trans.username}}" class="custom-round">
+                <input ng-enter="login(login_username,login_password,trans)"  ng-model="login_password"  type="password" placeholder="{{trans.password}}" class="custom-round">
+                <a href="" ng-click="login(login_username,login_password,trans)" class="custom-round">{{trans.login}}</a>
+            </div>
+        </div>
+        <div class="auth-footer">
+        게임을 즐기시려면 로그인 혹은 회원가입을 해주세요
+        </div>
+    </div>
+</div>
+
+<style>
+.auth-footer{
+    display: inline-block;
+    font-family: dotum;
+    text-align: center;
+    color: white;
+    font-size: 12px;
+    margin-top: 30px;
+    letter-spacing: 1px;
+    width: 100%;
+    word-spacing: 2px;
+}
+</style>
+    <script type="text/javascript" src="../global/js/custom.js"></script>
+    <footer><div>Copyright 2018. luckysevengames.com All rights reserved</div></footer>
+    <!-- <div class="loader"><div><img src="image/loader.png" alt=""></div></div> -->
+	<script type="text/javascript" src="../global/js/angular.init.js"></script>
+    <script type="text/javascript" src="../global/js/angular.main.js"></script>
+
+
+	<script type="text/javascript" src="../global/js/bootstrap.js"></script>
+	<script type="text/javascript" src="../global/js/sweetalert/sweetalert.min.js"></script>
+    <script type="text/javascript" src="../global/js/common.js"></script>
+
+
+  
+</body>
+</html>

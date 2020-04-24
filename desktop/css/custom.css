@@ -1,0 +1,35 @@
+.text-center{
+    text-align: center;
+}
+
+.custom-round{
+    width: 110px;
+    box-sizing: content-box;
+    border:1px solid#1f1916 ;
+    border-radius: 10px;
+    display: inline-block;
+    text-align: center;
+    height: 30px;
+    line-height: 30px;
+}
+
+
+.text-white{
+    color: #aaaaaa;
+}
+
+.text-black {
+    color :#1f1916;
+}
+
+
+.bg-black{
+    background-color: #1f1916;
+}
+
+
+.pull-right{
+    float: right;
+}
+
+

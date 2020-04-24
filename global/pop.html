@@ -1,0 +1,1201 @@
+
+    <div style="position:relative; width: 100%; height: 100%;">
+    <div class="box-popup">
+        <div class="popup-header">
+            <img class="logo" src="image/Logo-lg.png">
+            <div class="title">
+                <!-- <img class="logo" src="<?php asset_url('assets/global/images/money-history.png'); ?>"> -->
+                <span ng-bind="popup_title"></span>
+            </div>
+            <span class="back">
+                <a href="" ng-click="toggleModal('',false);closeEvent();closeMessage();closeMemo();closeHelpDesk();">Return to Home Screen >></a>
+                <!-- <img class="mobile-close" ng-click="toggleModal('',false);closeEvent();closeMessage();closeMemo();closeHelpDesk();" src="<?php asset_url('assets/mobile/images/close-icon-thin.png'); ?>" alt="" > -->
+            </span>
+            <div class="clearfix"></div>
+        </div>
+        <!--deposit and withdraw History-->
+        <div class="popup-content" ng-controller="" ng-show="modal_id == 'money_history'" id="money_history" >
+            <div class="menu" style="margin-left:0">
+                <ul>
+                    <li ng-class="(modalActive =='transRecord') ? 'active' : ' '"><a data-toggle="tab" href="#history_record_deposit" ng-click="menuModal('transRecord',trans.transaction_record)"><span class="tab-bullet"></span>{{trans.deposit}}</a></li>
+                    <li class="divider">I</li>
+                    <li ng-class="(modalActive =='withdrawHistory') ? 'active' : ' '"><a data-toggle="tab" href="#history_record_withdraw" ng-click="menuModal('withdrawHistory',trans.transaction_record)"><span class="tab-bullet"></span>{{trans.withdraw}}</a></li>
+                </ul>
+            </div>
+            <div class="content  oy-auto h-max  header-offset">
+                <div class="tab-content">
+                    <div id="history_record_deposit" ng-class="(modalActive =='transRecord') ? 'tab-content-history tab-pane fade in active' : 'tab-content-money tab-pane fade '">
+                        <div class="content-table">
+                            <div class="box-table" style="margin-top: 30px;">
+                                <ul>
+                                    <li class="history-header">
+                                        <span class="width-fortyfive">{{trans.deposit_info.date}}</span>
+                                        <span class="width-forty">{{trans.deposit_info.charge_amount}}</span>
+                                        <span class="width-fifteen">{{trans.deposit_info.condition}}</span >
+                                        <!-- <span>{{trans.deposit_info.delete}}</span> -->
+                                    </li>
+                                </ul>
+                                <ul>
+                                    <li ng-repeat="depositData in depositTrans">
+                                        <span class="width-fortyfive">{{depositData.created_at}}</span>
+                                        <span class="width-forty">{{depositData.amount | number : fractionsize }} {{trans.won}}</span>
+                                        <span class="text-warning width-fifteen" ng-if="depositData.status == 0">{{trans.deposit_info.pending}}</span>
+                                        <span class="text-warning width-fifteen" ng-if="depositData.status == 1">{{trans.deposit_info.pending}}</span>
+                                        <span class="text-success width-fifteen" ng-if="depositData.status == 2">{{trans.deposit_info.success}}</span>
+                                        <span class="text-danger width-fifteen" ng-if="depositData.status == 3">{{trans.deposit_info.canceled}}</span>
+                                        <!-- <span class="cursor-pointer" ng-if="depositData.status == 2 || depositData.status == 3" ng-click="depositDelete(depositData.id)">X</span> -->
+                                    </li>
+                                </ul>
+                            </div>
+                            <div class="center">
+                                <div class="pagination" ng-if="page.no_of_pages > 1">
+                                    <a href="javascript:void(0)" ng-if="page.current_page != 1" ng-click="loadDepositTransaction(page.current_page - 1)">&laquo;</a>
+                                    <a href="javascript:void(0)" ng-repeat="n in [] | range: page.no_of_pages" class="{{n + 1 == page.current_page ? 'active' : ''}}" ng-click="loadDepositTransaction(n + 1)">{{ n + 1 }}</a>
+                                    <a href="javascript:void(0)" ng-if="page.current_page != page.no_of_pages" ng-click="loadDepositTransaction(page.current_page + 1)">&raquo;</a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div id="history_record_withdraw" ng-class="(modalActive =='withdrawHistory') ? 'tab-content-history tab-pane fade in active' : 'tab-content-money tab-pane fade '">
+                        <div class="content-table">
+                            <div class="box-table">
+                                <ul style="margin-top: 30px;">
+                                    <li class="history-header">
+                                        <span class="width-fortyfive">{{trans.withdraw_info.date}}</span>
+                                        <span class="width-forty">{{trans.withdraw_info.charge_amount}}</span>
+                                        <span class="width-fifteen">{{trans.withdraw_info.condition}}</span>
+                                        <!-- <span class="cursor-pointer">{{trans.withdraw_info.delete}}</span> -->
+                                    </li>
+                                </ul>
+                                <ul>
+                                    <li ng-repeat="withdrawData in withdrawTrans">
+                                        <span class="width-fortyfive">{{withdrawData.created_at}}</span>
+                                        <span class="width-forty">{{withdrawData.amount | number : fractionsize }} {{trans.won}}</span>
+                                        <span class="text-warning width-fifteen" ng-if="withdrawData.status == 0">{{trans.withdraw_info.pending}}</span>
+                                        <span class="text-warning width-fifteen" ng-if="withdrawData.status == 1">{{trans.withdraw_info.pending}}</span>
+                                        <span class="text-success width-fifteen" ng-if="withdrawData.status == 2">{{trans.withdraw_info.success}}</span>
+                                        <span class="text-danger width-fifteen" ng-if="withdrawData.status == 3">{{trans.withdraw_info.canceled}}</span>
+                                        <!-- <span class="cursor-pointer" ng-if="withdrawData.status == 2 || withdrawData.status == 3" ng-click="withdrawDelete(withdrawData.id)">X</span> -->
+                                    </li>
+                                </ul>
+                            </div>
+                            <div class="center">
+                                <div class="pagination" ng-if="page.no_of_pages > 1">
+                                    <a href="javascript:void(0)" ng-if="page.current_page != 1" ng-click="loadWithdrawTransaction(page.current_page - 1)">&laquo;</a>
+                                    <a href="javascript:void(0)" ng-repeat="n in [] | range: page.no_of_pages" class="{{n + 1 == page.current_page ? 'active' : ''}}" ng-click="loadWithdrawTransaction(n + 1)">{{ n + 1 }}</a>
+                                    <a href="javascript:void(0)" ng-if="page.current_page != page.no_of_pages" ng-click="loadWithdrawTransaction(page.current_page + 1)">&raquo;</a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!--Betting history-->
+        <div class="popup-content" ng-controller="" ng-show="modal_id == 'betting_history'" id="betting_history" >
+            <div class="menu">
+                <ul>
+                    <li class="active"><a href="#"><span class="tab-bullet"></span>{{trans.game_history}}</a></li>
+                </ul>
+            </div>
+            <div class="content  oy-auto h-max  header-offset">
+                <div class="tab-content">
+                    <div id="history_record_betting" class="tab-content-history tab-pane fade in active">
+                        <div class="content-table">
+                            <div class="box-table">
+                                <ul>
+                                    <li class="history-header">
+                                        <span class="width-fortyfive">{{trans.date}}</span>
+                                        <span class="width-fifteen">{{trans.game}}</span>
+                                        <span class="width-forty">{{trans.bet_amount}}</span>
+                                        <span class="width-fifteen">{{trans.status}}</span>
+                                        <!-- <span>{{trans.deposit_info.delete}}</span> -->
+                                    </li>
+                                </ul>
+                                <ul>
+                                    <li ng-repeat="bettingData in gameProviderHistory">
+                                        <span class="width-fortyfive">{{bettingData.created_at}}</span>
+                                        <span class="text-warning width-fifteen" ng-if="bettingData.game_type == 2 || bettingData.game_type == 3 || bettingData.game_type == 4 || bettingData.game_type == 7">OZ Live</span>
+                                        <span class="text-warning width-fifteen" ng-if="bettingData.game_type == 5">Midas</span>
+                                        <span class="text-warning width-fifteen" ng-if="bettingData.game_type == 6">88 Casino</span>
+                                        <span class="width-forty">{{bettingData.bet_amount | number : fractionsize }} {{trans.won}}</span>
+                                        <span class="text-warning width-fifteen" ng-if="bettingData.status == 0">{{trans.deposit_info.pending}}</span>
+                                        <span class="text-danger width-fifteen" ng-if="bettingData.status == 1">{{trans.lose}}</span>
+                                        <span class="text-success width-fifteen" ng-if="bettingData.status == 2">{{trans.win}}</span>
+                                        <span class="text-warning width-fifteen" ng-if="bettingData.status == 3">{{trans.cancel}}</span>
+                                        <!-- <span class="cursor-pointer" ng-if="depositData.status == 2 || depositData.status == 3" ng-click="depositDelete(depositData.id)">X</span> -->
+                                    </li>
+                                </ul>
+                            </div>
+                            <!-- <div class="center">
+                                <div class="pagination" ng-if="page.no_of_pages > 1">
+                                    <a href="javascript:void(0)" ng-if="page.current_page != 1" ng-click="loadDepositTransaction(page.current_page - 1)">&laquo;</a>
+                                    <a href="javascript:void(0)" ng-repeat="n in [] | range: page.no_of_pages" class="{{n + 1 == page.current_page ? 'active' : ''}}" ng-click="loadDepositTransaction(n + 1)">{{ n + 1 }}</a>
+                                    <a href="javascript:void(0)" ng-if="page.current_page != page.no_of_pages" ng-click="loadDepositTransaction(page.current_page + 1)">&raquo;</a>
+                                </div>
+                            </div> -->
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!--Betting history-->
+        <!--deposit and withdraw Form-->
+        <div class="popup-content no-overflow" ng-if="modal_id == 'money_deposit' || modal_id == 'money_withdraw' " id="money_deposit_withdraw" ng-controller="" >
+            <div class="content wallet"  ng-if="modal_id == 'money_deposit'" id="deposit_form" >
+                <div class="box-form">
+                    <!-- <div class="form-group">
+                        <label>신청게임</label>
+                        <div>
+                            <ul>
+                                <li>
+                                    <div>
+                                        <span>원코인카지노</span>
+                                        <i class="fa fa-caret-down"></i>
+                                    </div>
+                                    <ul ng-hide="true">
+                                        <li>원코인카지노</li>
+                                    </ul>
+                                </li>
+                            </ul>
+                            <div>
+                                <span>* 원코인카지노 는 통합머니 시스템으로 모든게임을 즐기실 수 있습니다.</span>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label>핸드폰 번호</label>
+                        <div class="mobile">
+                            <input type="" name="">
+                            <span> - </span>
+                            <input type="" name="">
+                            <span> - </span>
+                            <input type="" name="">
+                            <div>
+                                <button>핸드폰 번호변경</button>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label></label>
+                        <div>
+                            <span>* 입력된 핸드폰 번호로 입금계좌가 발송됩니다.</span>
+                        </div>
+                    </div> -->
+                    <div class="form-group">
+                        <label>{{trans._popup_text._deposit.bank_name}}</label>
+                        <div>
+                            <span class="txt-white" ng-bind="profile_info.default_bank.bank_name"></span>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label>{{trans._popup_text._deposit.account_number}}</label>
+                        <div>
+                            <span class="txt-white" ng-bind="profile_info.default_bank.account_number"></span>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label>{{trans._popup_text._deposit.account_holder}}</label>
+                        <div>
+                            <span class="txt-white" ng-bind="profile_info.default_bank.account_holder"></span>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label>{{trans._popup_text._deposit.amount_to_deposit}}</label>
+                        <div>
+                            <input type="text" class="z-input text-center" id="deposit_amount" ng-keyup="depositKeyup()" ng-model="deposit_amount" ng-keypress="$event.keyCode === 13 && submitDeposit(trans)" money >
+                            <!-- <span class="text-red-color">{{trans.deposit_amount_note}}</span> -->
+                            <div class="box-btn-amount">
+                                <button ng-click="addAmount(10000)">1 {{trans.won}}</button>
+                                <button ng-click="addAmount(30000)">3 {{trans.won}}</button>
+                                <button ng-click="addAmount(50000)">5 {{trans.won}}</button>
+                                <button ng-click="addAmount(100000)">10 {{trans.won}}</button>
+                                <button ng-click="addAmount(300000)">30 {{trans.won}}</button>
+                                <button ng-click="addAmount(500000)">50 {{trans.won}}</button>
+                                <button class="text-red-color" ng-click="clearAmount()">{{trans.clear}}</button>
+                            </div>
+                        </div>
+                    </div>
+                    <!-- <div class="form-group">
+                        <label>예금자명</label>
+                        <div>
+                            <input type="" name="">
+                            <div>
+                                <span>* 입출금 계좌와 회원님의 이름이 다를경우 입출금에 제한될 수 있습니다.</span>
+                            </div>
+                        </div>
+                    </div> -->
+                    <div class="box-divider"></div>
+                </div>
+                <button class="submit custom-round" ng-click="submitDeposit(trans)">{{trans.confirm_deposit}}</button>
+            </div>
+            <div class="content wallet" id="withdraw_form" ng-show="modal_id == 'money_withdraw'">
+                <div class="box-form">
+                    <div class="form-group">
+                        <label>{{trans.bank_name}}</label>
+                        <div>
+                            <span>{{profile_info.default_bank.bank_name}}</span>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label>{{trans.account_number}}</label>
+                        <div>
+                            <span class="acc-no">{{profile_info.default_bank.account_number}}</span>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label>{{trans.exchange_amount}}</label>
+                        <div>
+                            <input class="z-input" type="text" id="withdraw_amount" ng-model="withdraw_amount" ng-keyup="withdrawKeyup()" ng-keypress="$event.keyCode === 13 && submitWithdraw(trans)">
+                            <span style="display: none" id="balance_money">{{profile_info.money}}</span>
+                            <div class="box-btn-amount">
+                                <button ng-click="addWithdrawAmount(10000)">1 {{trans.won}}</button>
+                                <button ng-click="addWithdrawAmount(30000)">3 {{trans.won}}</button>
+                                <button ng-click="addWithdrawAmount(50000)">5 {{trans.won}}</button>
+                                <button ng-click="addWithdrawAmount(100000)">10 {{trans.won}}</button>
+                                <button ng-click="addWithdrawAmount(300000)">30 {{trans.won}}</button>
+                                <button ng-click="addWithdrawAmount(500000)">50 {{trans.won}}</button>
+                                <button class="text-red-color" ng-click="clearAmount()">{{trans.clear}}</button>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label>{{trans._register_placeholder.exchange}}</label>
+                        <div>
+                            <input class="z-input" maxLength="4"  class="numeric" type="password" ng-model="exchange_pin" ng-keypress="$event.keyCode === 13 && submitWithdraw(trans)">
+                            <!-- <div>
+                                <span>* 입출금 계좌와 회원님의 이름이 다를경우 입출금에 제한될 수 있습니다.</span>
+                            </div> -->
+                        </div>
+                    </div>
+                    <div class="box-divider"></div>
+                </div>
+                <button class="submit custom-round" ng-click="submitWithdraw(trans)">{{trans.confirm_withdraw}}</button>
+            </div>
+        </div>
+        <!--points Form, points history, points Logs-->
+        <div class="popup-content no-overflow" ng-if="modal_id == 'points_form_logs'" id="points_form_logs" >
+            <div class="menu" style="margin-left:0">
+                <ul>
+                    <li class="active"><a  data-toggle="tab" href="#points_form" ng-click="menuModal('pointsForm',trans.transaction_record)"><span class="tab-bullet"></span>{{trans._popup_text._point.tab_title1}}</a></li>
+                    <li class="divider">I</li>
+                    <li><a data-toggle="tab" href="#points_exchange" ng-click="menuModal('pointsExchange',trans.transaction_record)"><span class="tab-bullet"></span>{{trans._popup_text._point.tab_title2}}</a></li>
+                    <li class="divider">I</li>
+                    <li><a data-toggle="tab" href="#points_logs" ng-click="menuModal('pointsLogs',trans.transaction_record)"><span class="tab-bullet"></span>{{trans._popup_text._point.tab_title3}}</a></li>
+                </ul>
+            </div>
+            <div class="content points header-offset" ng-controller="" style="margin-top: 30px;">
+                <div class="tab-content">
+                    <div id="points_form" ng-class="(modalActive =='pointsForm') ? 'tab-content-history tab-pane fade in active' : 'tab-content-money tab-pane fade '">
+                        <div class="box-form point-box">
+                            <div class="form-group">
+                                <label>{{trans.points}}</label>
+                                <div>
+                                    <span class="txt-white">{{profile_info.points | number : fractionSize}}</span>
+                                    <div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label>{{trans.points_amount}}</label>
+                                <div>
+                                    <input class="z-input text-center number-only zero-start-disable" id="point_amount" ng-model="points_amount" ng-keyup="pointsKeyup()" ng-keypress="$event.keyCode === 13 && submitDeposit(trans)" type="text">
+                                    <!-- <span class="text-red-color">{{trans.deposit_amount_note}}</span> -->
+                                    <div class="box-btn-amount">
+                                        <button ng-click="addPointAmount(10000)">1 {{trans.won}}</button>
+                                        <button ng-click="addPointAmount(30000)">3 {{trans.won}}</button>
+                                        <button ng-click="addPointAmount(50000)">5 {{trans.won}}</button>
+                                        <button ng-click="addPointAmount(100000)">10 {{trans.won}}</button>
+                                        <button ng-click="addPointAmount(300000)">30 {{trans.won}}</button>
+                                        <button ng-click="addPointAmount(500000)">50 {{trans.won}}</button>
+                                        <button class="text-red-color" ng-click="clearAmount()">{{trans.clear}}</button>
+                                    </div>
+                                </div>
+                            </div>
+                            <!-- <div class="form-group">
+                                <label>예금자명</label>
+                                <div>
+                                    <input type="" name="">
+                                    <div>
+                                        <span>* 입출금 계좌와 회원님의 이름이 다를경우 입출금에 제한될 수 있습니다.</span>
+                                    </div>
+                                </div>
+                            </div> -->
+                            <div class="box-divider"></div>
+                        </div>
+                        
+                        <button class="submit mb-20 custom-round" ng-click="submitPoints(trans)">{{trans.confirm_points}}</button>
+                    </div>
+                    <div id="points_exchange" ng-class="(modalActive =='pointsExchange') ? 'tab-content-history tab-pane fade in active' : 'tab-content-money tab-pane fade '">
+                        <div class="content-table">
+                            <div class="box-table">
+                                <ul>
+                                    <li class="history-header">
+                                        <span class="width-fortyfive">{{trans.deposit_info.date}}</span>
+                                        <span class="width-forty">{{trans._popup_text._point.tab2_text2}}</span>
+                                        <span class="width-fifteen">{{trans.deposit_info.condition}}</span>
+                                        <!-- <span>{{trans.deposit_info.delete}}</span> -->
+                                    </li>
+                                </ul>
+                                <ul>
+                                    <li ng-repeat="data in dataPoints">
+                                        <span class="width-fortyfive">{{data.created_at}}</span>
+                                        <span class="width-forty"> {{data.amount | number : fractionsize }} {{trans.won}}</span>
+                                        <span class="text-warning width-fifteen" ng-if="data.status == 0">{{trans.deposit_info.pending}}</span>
+                                        <span class="text-warning width-fifteen" ng-if="data.status == 1">{{trans.deposit_info.pending}}</span>
+                                        <span class="text-success width-fifteen" ng-if="data.status == 2">{{trans.deposit_info.success}}</span>
+                                        <span class="text-danger width-fifteen" ng-if="data.status == 3">{{trans.deposit_info.canceled}}</span>
+                                        <!-- <span ng-if="data.status == 2 || data.status == 3" ng-click="depositDelete(data.id)">X</span> -->
+                                    </li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+                    <div id="points_logs" ng-class="(modalActive =='pointsLogs') ? 'tab-content-history tab-pane fade in active' : 'tab-content-money tab-pane fade '">
+                        <div class="content-table">
+                            <div class="box-table">
+                                <ul>
+                                    <li class="history-header">
+                                        <span>{{trans.deposit_info.date}}</span>
+                                        <span>{{trans._popup_text._point.tab3_text2}}</span>
+                                        <span>{{trans._popup_text._point.tab3_text3}}</span>
+                                        <span>{{trans._popup_text._point.tab3_text4}}</span>
+                                        <!-- <span>{{trans.deposit_info.condition}}</span>
+                                        <span>{{trans.deposit_info.delete}}</span> -->
+                                    </li>
+                                </ul>
+                                <ul>
+                                    <li ng-repeat="data in dataLogs">
+                                        <span>{{data.created_at | noTimeFormat}}</span>
+                                        <span>{{data.amount | number : fractionsize }} {{trans.won}}</span>
+                                        <span>{{data.total_points | number : fractionsize }}</span>
+                                        <span>{{data.type == 'bet_slip' ? trans.bet_slip :'' }} {{data.type == 'point_exchange' ? trans.point_exchange :'' }}</span>
+                                        <span> </span>
+                                        <!-- <span class="text-warning" ng-if="data.status == 0">{{trans.deposit_info.pending}}</span>
+                                        <span class="text-warning" ng-if="data.status == 1">{{trans.deposit_info.pending}}</span>
+                                        <span class="text-success" ng-if="data.status == 2">{{trans.deposit_info.success}}</span>
+                                        <span class="text-danger" ng-if="data.status == 3">{{trans.deposit_info.canceled}}</span>
+                                        <span ng-if="data.status == 2 || data.status == 3" ng-click="depositDelete(data.id)">X</span> -->
+                                    </li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!--Notice Or Message-->
+        <div class="popup-content {{ !view_message ? 'pop-with-padding-side' : ''}} no-overflow" ng-controller="" ng-if="modal_id == 'message_history'" id="message_history" >
+            <div class="content " ng-if="!view_message">
+                <div class="tab-content">
+                    <div id="tab_message" ng-class="(modalActive =='messageList') ? 'tab-pane fade in active' : 'tab-pane fade '">
+                        <div class="content-message-view" ng-show="is_message_view">
+                            <div class="box-message-view ">
+                                <img class="close" ng-click="is_message_view = false;" src="<?php asset_url('assets/mobile/images/btn-close.png'); ?>" alt="">
+                                <ul class="message-view-contaner overflow-y-hidden">
+                                    <li class="message-view-content">
+                                        <div class="message-container">
+                                            <div class="message-header">
+                                                <!-- <span ng-show="message_view.created_type == 'admin'" ng-bind="message_view.created_admin.username +'('+message_view.created_admin.nickname +')'"></span>
+                                                <span ng-show="message_view.created_type == 'player'" ng-bind="message_view.created_player.username +'('+message_view.created_player.nickname +')'"></span> -->
+                                                <span ng-bind="message_view.title" class="pull-left"></span>
+                                                <span class="text-dimmer pull-right" ng-bind="message_view.created_at"></span>
+                                                <div class="clearfix"></div>
+                                            </div>
+                                        </div>
+                                    </li>  
+                                    <li class="message-view-content text " ng-if="is_message_view">
+                                        <div class="message-content">
+                                            <textarea name="" id="" readonly cols="30" rows="10" ng-model="message_view.content"></textarea>
+                                        </div>
+                                    </li>
+                                </ul>
+                            </div>
+                        </div>
+                        <div class="content-table event-width">
+                            <div class="box-table message">
+                                <ul>
+                                    <li class="history-header" >
+                                        <span>{{trans._popup_text._event.text1_1}}</span>
+                                        <span>{{trans._popup_text._event.text1_2}}</span>
+                                        <span>{{trans._popup_text._event.text1_3}}</span>
+                                    </li>
+                                </ul>
+                                <ul class="message-list {{is_message_create ? 'smallest' :''}} {{is_message_view ? 'small' :''}}">
+                                    <li ng-repeat="notice in notices track by $index" ng-click="showMessage(notice)">
+                                        <span ng-bind="$index + 1"></span>
+                                        <span ng-bind="notice.title"></span>
+                                        <span ng-bind="notice.created_at | noTimeFormat"></span>
+                                    </li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+                    <div id="tab_message_write" ng-class="(modalActive =='messageWrite') ? 'tab-pane fade in active' : 'tab-pane fade '">
+                        <div class="box-wallet box-message">
+                            <div class="box-wallet-content">
+                                <div class="content">
+                                    <div>
+                                        <span></span>
+                                        <label ng-bind="trans.title_message"></label>
+                                        <input type="text" ng-model="messageTitle" placeholder="{{trans.input_title}}">
+                                    </div>
+                                    <div>
+                                        <textarea name="" id=""  cols="30" rows="10" ng-model="messageContent" placeholder="{{trans.input_message}}">></textarea>
+                                        <button class="btn-message" ng-click="submitMessage()" style="-webkit-tap-highlight-color: rgba(0, 0, 0, 0);" ng-bind="trans.send"></button>
+                                    </div>
+                                </div>
+                                <div class="clearfix"></div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="content with-pad" ng-if="view_message">
+                <div class="message-header">
+                    <span ng-bind="viewing_message.title"></span>
+                    <div class="pull-right">
+                    <span ng-bind="viewing_message.created_at"></span>
+                    <a href="" ng-click="closeMessage()"ng-bind="trans._popup_text._notice.btn_back"></a>
+                    </div>
+                </div>
+                <div class="message-content w-max">
+                    <div class="box-divider {{view_message ? 'no-height' : ''}}"></div>
+                    <p ng-bind="viewing_message.content"></p>
+                </div>
+            </div>
+        </div>
+        <div class="popup-content {{ !view_event ? 'pop-with-padding-side' : ''}} no-overflow" ng-controller="" ng-if="modal_id == 'event_history'" id="message_history" >
+            <div class="content " ng-if="!view_event">
+                <div class="tab-content">
+                    <div id="tab_message" ng-class="(modalActive =='eventList') ? 'tab-pane fade in active' : 'tab-pane fade '">
+                        <div class="content-table">
+                            <div class="box-table message event-width">
+                                <ul>
+                                    <li class="history-header" >
+                                        <span>{{trans._popup_text._event.text1_1}}</span>
+                                        <span>{{trans._popup_text._event.text1_2}}</span>
+                                        <span>{{trans._popup_text._event.text1_3}}</span>
+                                    </li>
+                                </ul>
+                                <ul class="message-list">
+                                    <li ng-repeat="event in events track by $index" ng-click="viewEvent(event)">
+                                        <span ng-bind="$index + 1"></span>
+                                        <span ng-bind="event.title"></span>
+                                        <span ng-bind="event.created_at | noTimeFormat"></span>
+                                    </li>
+
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+                    <div id="tab_message_write" ng-class="(modalActive =='messageWrite') ? 'tab-pane fade in active' : 'tab-pane fade '">
+                        <div class="box-wallet box-message">
+                            <div class="box-wallet-content">
+                                <div class="content">
+                                    <div>
+                                        <span></span>
+                                        <label ng-bind="trans.title_message"></label>
+                                        <input type="text" ng-model="messageTitle" placeholder="{{trans.input_title}}">
+                                    </div>
+                                    <div>
+                                        <textarea name="" id=""  cols="30" rows="10" ng-model="messageContent" placeholder="{{trans.input_message}}">></textarea>
+                                        <button class="btn-message" ng-click="submitMessage()" style="-webkit-tap-highlight-color: rgba(0, 0, 0, 0);" ng-bind="trans.send"></button>
+                                    </div>
+                                </div>
+                                <div class="clearfix"></div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="content with-pad" ng-if="view_event">
+                <div class="message-header">
+                    <span ng-bind="viewing_event.title"></span>
+                    <div class="pull-right">
+                    <span ng-bind="viewing_event.created_at"></span>
+                    <a href="" ng-click="closeEvent();" ng-bind="trans._popup_text._event.btn_back"></a>
+                    </div>
+                </div>
+                
+                <div class="message-content w-max">
+                <div class="box-divider {{view_event ? 'no-height' : ''}}"></div>
+                    <p ng-bind="viewing_event.content"></p>
+                </div>
+            </div>
+        </div>
+
+        <!-- Memo -->
+        <div class="popup-content no-overflow" ng-controller="" ng-if="modal_id == 'memo'" id="message_history" >
+            <!-- <div class="menu">
+                <ul>
+                    <li class="active"><a  data-toggle="tab" href="#memo_list" ng-click="menuModal('memoList',trans.transaction_record)"><span class="tab-bullet"></span>List</a></li>
+                    <li class="divider">I</li>
+                    <li><a data-toggle="tab" href="#memo_create" ng-click="menuModal('memoWrite',trans.transaction_record);closeMemo()"><span class="tab-bullet"></span>Create</a></li>
+                </ul>
+            </div> -->
+            <div class="content" ng-show="!view_memo">
+                <div class="tab-content">
+                    <div id="tab_message" ng-class="(modalActive =='memoList') ? 'tab-pane fade in active' : 'tab-pane fade '">
+                        <div class="content-table">
+                            <div class="box-table message event-width">
+                                <ul>
+                                    <li class="history-header" >
+                                        <span>{{trans._popup_text._memo.text1_1}}</span>
+                                        <span>{{trans._popup_text._memo.text1_2}}</span>
+                                        <span>{{trans._popup_text._memo.text1_3}}</span>
+                                    </li>
+                                </ul>
+                                <ul class="message-list">
+                                    <li ng-repeat="message in messages track by $index" ng-click="viewMemo(message)">
+                                        <span ng-bind="$index + 1"></span>
+                                        <span ng-class="(message.player_read != 1) ? 'tx-white' : ' '">
+                                            <span ng-if="message.player_read != 1">[NEW]</span>
+                                            <span ng-bind="message.title"></span>
+                                            
+                                        </span>
+                                        
+                                        <span ng-bind="message.created_at | noTimeFormat"></span>
+                                    </li>
+
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+                    <div id="tab_message_write" ng-class="(modalActive =='memoWrite') ? 'tab-pane fade in active' : 'tab-pane fade '">
+                        <div class="box-wallet box-message">
+                            <div class="box-wallet-content">
+                                <div class="content">
+                                    <div>
+                                        <span></span>
+                                        <label ng-bind="trans.title_message"></label>
+                                        <input type="text" ng-model="memoTitle" placeholder="{{trans.input_title}}">
+                                    </div>
+                                    <div>
+                                        <textarea name="" id=""  cols="30" rows="10" ng-model="memoContent" placeholder="{{trans.input_message}}">></textarea>
+                                        <button class="btn-message" ng-click="submitMemo(trans)" style="-webkit-tap-highlight-color: rgba(0, 0, 0, 0);" ng-bind="trans.send"></button>
+                                    </div>
+                                </div>
+                                <div class="clearfix"></div>
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+            <div class="content" ng-show="view_memo">
+                <div class="message-header">
+                    <span ng-bind="viewing_memo.title"></span>
+                    <div class="pull-right">
+                    <span ng-bind="viewing_memo.created_at"></span>
+                    <a href="" ng-click="closeMemo();loadMessageList();" ng-bind="trans._popup_text._event.btn_back"></a>
+                    </div>
+                </div>
+                
+                <div class="message-content w-max message-content-f">
+                <!-- <div class="box-divider {{view_memo ? 'no-height' : ''}}"></div> -->
+                    <p ng-bind="viewing_memo.content"></p>
+                </div>
+            </div>
+        </div>
+
+            <!-- Help Desk -->
+            <div class="popup-content no-overflow" ng-controller=""   ng-if="modal_id == 'help_desk'"id="message_history" >
+            <div class="menu" style="margin-left:0">
+                <ul>
+                     <li  class="active"><a data-toggle="tab" href="#help_desk_create" ng-click="menuModal('helpDeskWrite',trans.transaction_record);closeHelpDesk();loadHelpDeskList();"><span class="tab-bullet"></span><span ng-bind="trans._popup_text._help_desk.create"></span></a></li>
+                     <li class="divider">I</li>
+                    <li><a  data-toggle="tab" href="#help_desk_list" ng-click="menuModal('helpDeskList',trans.transaction_record)"><span class="tab-bullet"></span><span ng-bind="trans._popup_text._help_desk.list"></span></a></li>
+                    
+                    
+                </ul>
+            </div>
+            <div class="content"   ng-show="!view_help_desk">
+                <div class="tab-content">
+                    <div id="tab_message" ng-class="(modalActive =='helpDeskList') ? 'tab-pane fade in active' : 'tab-pane fade '">
+                        <div class="content-table">
+                            <div class="box-table message event-width">
+                                <ul>
+                                    <li class="history-header" >
+                                        <span>{{trans._popup_text._help_desk.text1_1}}</span>
+                                        <span>{{trans._popup_text._help_desk.text1_2}}</span>
+                                        <span>{{trans._popup_text._help_desk.text1_3}}</span>
+                                    </li>
+                                </ul>
+                                <ul class="message-list">
+                                    <li ng-repeat="help in helpdesk track by $index" ng-click="viewHelpDesk(help)">
+                                        <span ng-bind="$index + 1"></span>
+                                        <span ng-bind="help.title"></span>
+                                        <span ng-bind="help.created_at | noTimeFormat"></span>
+                                    </li>
+
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+                    <div id="tab_message_write" ng-class="(modalActive =='helpDeskWrite') ? 'tab-pane fade in active' : 'tab-pane fade '">
+                        <!-- <div class="box-wallet box-message">
+                            <div class="box-wallet-content">
+                                <div class="content">
+                                    <div>
+                                        <span></span>
+                                        <label ng-bind="trans.title_message"></label>
+                                        <input type="text" ng-model="memoTitle" placeholder="{{trans.input_title}}">
+                                    </div>
+                                    <div>
+                                        <textarea name="" id=""  cols="30" rows="10" ng-model="memoContent" placeholder="{{trans.input_message}}">></textarea>
+                                        <button class="btn-message" ng-click="submitMemo(trans)" style="-webkit-tap-highlight-color: rgba(0, 0, 0, 0);" ng-bind="trans.send"></button>
+                                    </div>
+                                </div>
+                                <div class="clearfix"></div>
+                            </div>
+                        </div> -->
+                        <div class="box-form">
+                            <div class="form-group" style="margin-top: 30px;" >
+                                <label class="help_desk" ng-bind="trans.title_message"></label>
+                                <div class="help_desk">
+                                    <input  class="wd-500" ng-model="memoTitle" placeholder="{{trans.input_title}}" type="text">
+
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label class="help_desk" ng-bind="trans.content"></label>
+                                <div class="help_desk"> 
+                                    <textarea name="" id=""  cols="90" rows="12" ng-model="memoContent" placeholder="{{trans.input_message}}">></textarea>
+
+                                </div>
+                            </div>
+                            
+                            
+                        </div>
+                        <button class="btn-message submit mb-20 btn-bp-60 custom-round" ng-click="submitMemo(trans)" style="-webkit-tap-highlight-color: rgba(0, 0, 0, 0);" ng-bind="trans.send"></button>
+                    </div>
+
+                </div>
+            </div>
+            <div class="content" ng-show="view_help_desk">
+                <div class="message-header">
+                    <span ng-bind="viewing_help_desk.title"></span>
+                    <div class="pull-right">
+                    <span ng-bind="viewing_help_desk.created_at"></span>
+                    <a href="" ng-click="closeHelpDesk();loadHelpDeskList();" ng-bind="trans._popup_text._event.btn_back"></a>
+                    </div>
+                </div>
+                
+                <div class="message-content w-max message-content-f">
+                <!-- <div class="box-divider {{view_help_desk ? 'no-height' : ''}}"></div> -->
+                    <p ng-bind="viewing_help_desk.content"></p>
+                </div>
+
+                <!-- <div class="message-header">
+                    <span ng-bind="trans.admin"></span>
+
+                </div> -->
+                <div class="message-content w-max" ng-if="!viewing_help_desk.replies">
+                    <p ng-bind="trans._popup_text._help_desk.no_reply" ></p>
+                </div>
+                <div class="message-content w-max" ng-repeat="reply in viewing_help_desk.replies" ng-if="viewing_help_desk.replies">
+                    <p ng-bind="reply.content"></p>
+                </div>
+                
+            </div>
+        </div>
+
+
+        <!--Security-->
+        <div class="popup-content" ng-if="modal_id == 'security'"  >
+            <div class="content wallet security oy-auto text-left">
+                <div>
+                    <span ng-bind="trans._popup_text._security.text1_1"></span>
+                    <span  ng-bind="trans._popup_text._security.text1_2"></span>
+                    <span  ng-bind="trans._popup_text._security.text1_3"></span>
+                </div>
+                <div class="dark-bg">
+                    <span ng-bind="trans._popup_text._security.title1"></span>
+                </div>
+                <div>
+                    <span  ng-bind="trans._popup_text._security.text2_1"></span>
+                    <span  ng-bind="trans._popup_text._security.text2_2"></span>
+                    <span  ng-bind="trans._popup_text._security.text2_3"></span>
+                    <span  ng-bind="trans._popup_text._security.text2_4"></span>
+                    <span  ng-bind="trans._popup_text._security.text2_5"></span>
+                </div>
+                <div class="dark-bg">
+                    <span ng-bind="trans._popup_text._security.title2"></span>
+                </div>
+                <div>
+                    <span  ng-bind="trans._popup_text._security.text3_1"></span>
+                    <span  ng-bind="trans._popup_text._security.text3_2"></span>
+                    <span  ng-bind="trans._popup_text._security.text3_3"></span>
+                </div>
+                <div class="dark-bg">
+                    <span ng-bind="trans._popup_text._security.title3"></span>
+                </div>
+                <div>
+                    <span  ng-bind="trans._popup_text._security.text4_1"></span>
+                </div>
+            </div>
+        </div>
+        <div class="popup-content no-overflow" id="rank" ng-if="modal_id == 'rank'">
+            <div class="content wallet security team-viewer rank no-overflow">
+                <div class="dark-bg">
+                    <div>
+                        <span ng-bind="trans._popup_text._rank.header1"></span>
+                        <span ng-bind="trans._popup_text._rank.header2"></span>
+                    </div>
+                </div>
+                <div style="height: 436px;">
+                    <div>
+                        <span>
+                            <ul>
+                                <li class="animated-li" ng-repeat="deposit in rank_deposits  | limitTo: 13">
+                                    <span>{{deposit.time}}   {{deposit.username | withdrawdepositasterisk}}</span>
+                                    <span ng-bind="deposit.amount | number"></span>
+                                </li>
+                                <li>
+                                    <span></span>
+                                    <span ng-bind="trans._popup_text._rank.footer1"></span>
+                                </li>
+                            </ul>
+                        </span>
+                        <span>
+                            <ul>
+                                <li class="animated-li" ng-repeat="withdraw in rank_withdraws  | limitTo: 13">
+                                    <span>{{withdraw.time}}   {{withdraw.username | withdrawdepositasterisk}}</span>
+                                    <span class="input-money" ng-bind="withdraw.amount | number"></span>
+                                </li>
+                                
+                                <li>
+                                    <span></span>
+                                    <span ng-bind="trans._popup_text._rank.footer2"></span>
+                                </li>
+                            </ul>
+                        </span>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="popup-content" ng-if="modal_id == 'mobile-service'">
+            <div class="content wallet security team-viewer  oy-auto">
+                <div class="dark-bg">
+                    <span>{{trans._popup_text._service.title1}}</span>
+                </div>
+                <div>
+                    <span>{{trans._popup_text._service.text1_1}}</span>
+                    <span>{{trans._popup_text._service.text1_2}}</span>
+                    <span>{{trans._popup_text._service.text1_3}}</span>
+                    <span class="mt-15 txt-blue">{{trans._popup_text._service.text1_4}}</span>
+                </div>
+                <div class="dark-bg team-viewer-logo">
+                    <span>{{trans._popup_text._service.text1_1}}</span>
+                </div>
+                <div>
+                    <img src="<?php asset_url('assets/global/images/mobile-app.png'); ?>">
+                </div>
+            </div>
+        </div>
+        <!--safety-->
+        <div class="popup-content" id="safety" ng-if="modal_id == 'safety'" >
+            <div class="content wallet security team-viewer safety  oy-auto">
+                <div>
+                    <span>{{trans._popup_text._safety.text1_1}}</span>
+                    <span>{{trans._popup_text._safety.text1_2}}</span>
+                    <!-- <span>보안 설비를 갖추어 서비스를 제공하고 있습니다.</span> -->
+                    <span>{{trans._popup_text._safety.text1_3}}</span>
+                    <!-- <span>보호하기가 매우 어려운 실정입니다. 이에 당사에서는 공인된 바이러스 백신 프로그램을 설치할것을 회원 여러분께 권유드리는 바입니다.</span> -->
+                </div>
+                <div class="dark-bg team-viewer-logo">
+                    <a href="https://www.teamviewer.com" target="_blank"><img class="team-viewer" src="<?php asset_url('assets/global/images/s1.png'); ?>"></a>
+                </div>
+                <div>
+                    <span>{{trans._popup_text._safety.text2_1}}</span>
+                </div>
+                <div class="dark-bg team-viewer-logo">
+                    <a href="https://www.teamviewer.com" target="_blank"><img class="team-viewer" src="<?php asset_url('assets/global/images/s2.png'); ?>"></a>
+                </div>
+                <div>
+                    <span>{{trans._popup_text._safety.text3_1}}</span>
+                </div>
+                <div class="dark-bg team-viewer-logo">
+                    <a href="https://www.teamviewer.com" target="_blank"><img class="team-viewer" src="<?php asset_url('assets/global/images/s3.png'); ?>"></a>
+                </div>
+                <div>
+                    <span>{{trans._popup_text._safety.text4_1}}</span>
+                </div>
+            </div>
+        </div>
+        <!--contact-->
+        <div class="popup-content" id="contact" ng-if="modal_id == 'contact'">
+            <div class="content wallet security oy-auto text-left">
+                <div>
+                    <span>{{trans._popup_text._contact.text1_1}}</span>
+                    <span>{{trans._popup_text._contact.text1_2}}</span>
+                </div>
+                <div class="dark-bg">
+                    <span>{{trans._popup_text._contact.title1}}</span>
+                </div>
+                <div>
+                    <span>{{trans._popup_text._contact.text2_1}}</span>
+                    <span>{{trans._popup_text._contact.text2_2}}</span>
+                    <!-- <span>- 성인PC방 또는 성인사이트 운영자.</span> -->
+                    <span>{{trans._popup_text._contact.text2_3}}</span>
+                    <span>{{trans._popup_text._contact.text2_5}}</span>
+                    <span>{{trans._popup_text._contact.text2_6}}</span>
+                </div>
+                <div class="dark-bg">
+                    <span>{{trans._popup_text._contact.title2}}</span>
+                </div>
+                <div class=" inquiry">
+                <span>{{trans._popup_text._contact.text3_1}}</span>
+                <span>{{trans._popup_text._contact.text3_2}}</span>
+                </div>
+                
+            </div>
+        </div>
+        <div class="popup-content" id="my_page" ng-controller="" ng-if="modal_id == 'account'">
+            <div class="content wallet" id="account_form">
+                <div class="box-form my-page">
+                    <div class="form-group">
+                        <label>{{trans.username}}</label>
+                        <div>
+                            <span class="txt-white">{{profile_info.username}}</span>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label>{{trans.phone}}</label>
+                        <div>
+                            <span class="txt-white">{{profile_info.phone}}</span>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label>{{trans.new_password}}</label>
+                        <div>
+                            <input class="z-input" ng-change="changeCurrentPassword = newPassword;" type="password" placeholder="{{trans._account_placeholder.password}}" ng-model="newPassword">
+                            <div>
+                                <span>{{trans._popup_text._my_page.new_password}}</span>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label>{{trans.confirm_new_password}}</label>
+                        <div>
+                            <input class="z-input" type="password" placeholder="{{trans._account_placeholder.confirm_password}}" ng-model="confirmNewPassword">
+                            <div>
+                                <span>{{trans._popup_text._my_page.confirm_password}}</span>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label>{{trans.bank_name}}</label>
+                        <div>
+                            <!-- <input class="z-input" ng-model="createBankName"> -->
+                            <select ng-model="createBankName" class="z-select">
+                                <option value selected="selected">{{trans.selection}}</option>
+                                <option ng-repeat="item in bank" value="{{item}}" >{{item}}</option>
+                            </select>
+                            <!-- <div>
+                                <span>* 확인을 위해 새로운 비밀번호를 한번더 입력해주세요.</span>
+                            </div> -->
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label>{{trans.account_name}}</label>
+                        <div>
+                            <input class="z-input" ng-model="createBankHolder">
+                            <!-- <div>
+                                <span>* 확인을 위해 새로운 비밀번호를 한번더 입력해주세요.</span>
+                            </div> -->
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label>{{trans.account_number}}</label>
+                        <div>
+                            <input class="z-input" ng-model="createBankNumber">
+                            <!-- <div>
+                                <span>* 확인을 위해 새로운 비밀번호를 한번더 입력해주세요.</span>
+                            </div> -->
+                        </div>
+                    </div>
+                    <div class="box-divider"></div>
+                </div>
+                <button class="submit custom-round" ng-click="submitChangePass(trans)">{{trans.edit}}</button>
+            </div>
+        </div>
+        <!--Remote-->
+        <div class="popup-content" id="remote" ng-if="modal_id == 'remote'">
+            <div class="content wallet security team-viewer">
+                <div class="dark-bg" style="    margin-top: 20px;">
+                    <span>{{trans._popup_text._support.title1}}</span>
+                </div>
+                <div>
+                    <span>{{trans._popup_text._support.text1_1}}</span>
+                    <span>{{trans._popup_text._support.text1_2}}</span>
+                    <span>{{trans._popup_text._support.text1_3}}</span>
+                </div>
+                <div class="dark-bg team-viewer-logo">
+                    <a href="https://www.teamviewer.com" target="_blank"><img class="team-viewer" src="<?php asset_url('assets/global/images/team-viewer.png'); ?>"></a>
+                </div>
+                <div>
+                    <span>{{trans._popup_text._support.text2_1}},.</span>
+                    <span>{{trans._popup_text._support.text2_2}}</span>
+                    <span>{{trans._popup_text._support.text2_3}}</span>
+                </div>
+            </div>
+        </div>
+        <div class="popup-content" ng-if="modal_id == 'game_guide'"  id="guide" >
+            <div class="menu" style="margin-left:0">
+                <ul>
+                    <li ng-class="(modalActive =='gBaccarat') ? 'active' : ' '"><a data-toggle="tab" href="#guide_baccarat" ng-click="menuModal('gBaccarat',trans.transaction_record)"><span class="tab-bullet"></span>{{trans._game.baccarat}} </a></li>
+                    <li class="divider">I</li>
+                    <li ng-class="(modalActive =='gOdd') ? 'active' : ' '"><a data-toggle="tab" href="#guide_odd" ng-click="menuModal('gOdd',trans.transaction_record)"><span class="tab-bullet"></span>{{trans._game.oddeven}}</a></li>
+                    <li class="divider">I</li>
+                    <li ng-class="(modalActive =='dNine') ? 'active' : ' '"><a data-toggle="tab" href="#guide_nine" ng-click="menuModal('dNine',trans.transaction_record)"><span class="tab-bullet"></span>{{trans._game.nine}} </a></li>
+                    <li class="divider">I</li>
+                    <li ng-class="(modalActive =='gGostop') ? 'active' : ' '"><a data-toggle="tab" href="#guide_gostop" ng-click="menuModal('gGostop',trans.transaction_record)"><span class="tab-bullet"></span>{{trans._game.fivetwo}}</a></li>
+                </ul>
+            </div>
+            <div class="content guide text-left header-offset">
+                <div class="tab-content">
+                    <div id="guide_baccarat" ng-class="(modalActive =='gBaccarat') ? 'tab-content-history tab-pane fade in active' : 'tab-content-money tab-pane fade '">
+                        <div class="content-table">
+                        
+                            <div class="box-guide-label">
+                            <!-- <span ng-bind="browser"></span> -->
+                                <span>{{trans._popup_text._game_guide._baccarat.text1_1}}</span>
+                                <span>{{trans._popup_text._game_guide._baccarat.text1_2}}</span>
+                                <span>{{trans._popup_text._game_guide._baccarat.text1_3}}</span>
+                                <span>{{trans._popup_text._game_guide._baccarat.text1_4}}</span>
+                            </div>
+                            <div class="box-guide-image">
+                                <img class="team-viewer" src="<?php asset_url('assets/global/images/guide-bc.png'); ?>">
+                            </div>
+                        </div>
+                        
+                    </div>
+                    <div id="guide_odd" ng-class="(modalActive =='gOdd') ? 'tab-content-history tab-pane fade in active' : 'tab-content-money tab-pane fade '">
+                        <div class="content-table">
+                            <div class="box-guide-label">
+                                <span>{{trans._popup_text._game_guide._oddeven.text1_1}}</span>
+                                <span>{{trans._popup_text._game_guide._oddeven.text1_2}}</span>
+                                <span>{{trans._popup_text._game_guide._oddeven.text1_3}}</span>
+                                <span></span>
+                            </div>
+                            <div class="box-guide-image">
+                                <img class="team-viewer" src="<?php asset_url('assets/global/images/guide-oe.png'); ?>">
+                            </div>
+                        </div>
+                    </div>
+                    <div id="guide_nine" ng-class="(modalActive =='dNine') ? 'tab-content-history tab-pane fade in active' : 'tab-content-money tab-pane fade '">
+                        <div class="content-table">
+                            <div class="box-guide-label">
+                                <span>{{trans._popup_text._game_guide._nine.text1_1}}</span>
+                                <span>{{trans._popup_text._game_guide._nine.text1_2}}</span>
+                                <span>{{trans._popup_text._game_guide._nine.text1_3}}</span>
+                                <span></span>
+                            </div>
+                            <div class="box-guide-image">
+                                <img class="team-viewer" src="<?php asset_url('assets/global/images/guide-nn.png'); ?>">
+                            </div>
+                        </div>
+                    </div>
+                    <div id="guide_gostop" ng-class="(modalActive =='gGostop') ? 'tab-content-history tab-pane fade in active' : 'tab-content-money tab-pane fade '">
+                        <div class="content-table">
+                            <div class="box-guide-label">
+                                <span>{{trans._popup_text._game_guide._fivetwo.text1_1}}</span>
+                                <span>{{trans._popup_text._game_guide._fivetwo.text1_2}}</span>
+                                <div class="box-guide-image gs">
+                                    <img class="team-viewer" src="<?php asset_url('assets/global/images/guide-gs.png'); ?>">
+                                </div>
+                                <span>{{trans._popup_text._game_guide._fivetwo.text1_3}}</span>
+                                <span>{{trans._popup_text._game_guide._fivetwo.text1_4}}</span>
+                                <span>{{trans._popup_text._game_guide._fivetwo.text1_5}}</span>
+                                
+                            </div>
+                            
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="popup-content no-overflow" ng-if="modal_id == 'rank_mobile'" id="rank_mobile" >
+            <div class="menu">
+                <ul>
+                    <li class="active"><a data-toggle="tab" href="#points_form"  ng-click="menuModal('rank_first',trans.transaction_record)"><span class="tab-bullet"></span>{{trans._popup_text._rank.header1}} </a></li>
+                    <li class="divider">I</li>
+                    <li><a data-toggle="tab" href="#points_exchange" ng-click="menuModal('rank_second',trans.transaction_record)"><span class="tab-bullet"></span>{{trans._popup_text._rank.header2}}</a></li>
+                </ul>
+            </div>
+            <div class="content points header-offset" ng-controller="">
+                <div class="tab-content">
+                    <div id="rank_mobile" ng-class="(modalActive =='rank_first') ? 'tab-content-history tab-pane fade in active' : 'tab-content-money tab-pane fade '">
+                        <div class="box-form point-box">
+                        <span>
+                            <ul>
+                                <li class="animated-li" ng-repeat="deposit in depositrealtime  | limitTo: 13">
+                                    <span>{{deposit.time}}   {{deposit.username | withdrawdepositasterisk}}</span>
+                                    <span ng-bind="deposit.amount | number"></span>
+                                </li>
+                                <li>
+                                    {{trans._popup_text._rank.footer1}}
+                                </li>
+                            </ul>
+                        </span>
+                        </div>
+                        
+                        <!-- <button class="submit" ng-click="submitPoints(trans)">{{trans.confirm_points}}</button> -->
+                    </div>
+                    <div id="rank_mobile_two" ng-class="(modalActive =='rank_second') ? 'tab-content-history tab-pane fade in active' : 'tab-content-money tab-pane fade '">
+                    <div class="box-form point-box">
+                        <span>
+                            <ul>
+                                <li ng-repeat="withdraw in withdrawrealtime  | limitTo: 13">
+                                    <span>{{withdraw.time}}   {{withdraw.username | withdrawdepositasterisk}}</span>
+                                    <span ng-bind="withdraw.amount | number"></span>
+                                </li>
+                                <li>
+                                {{trans._popup_text._rank.footer2}}
+                                </li>
+                            </ul>
+                        </span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!-- LOTT -->
+
+        <!--My Page-->
+
+        <!--rgister-->
+        <div class="popup-content" id="register" ng-controller="" ng-if="modal_id == 'register'">
+            <div class="content wallet register">
+                <div class="box-form">
+                    <div class="form-group">
+                        <label>{{trans._register_placeholder.id}}</label>
+                        <div>
+                            <input type="text" placeholder="{{trans._register_placeholder.id}}" ng-model="reg_username" id="reg_username">
+                            <div>
+                                <span>* {{trans._bubble.username}}</span>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label>{{trans._register_placeholder.password}}</label>
+                        <div>
+                            <input class="z-input" type="password" placeholder="{{trans._register_placeholder.password}}" ng-model="reg_password" id="reg_password">
+                            <div>
+                                <span>* {{trans._bubble.password}}</span>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label>{{trans._register_placeholder.confirm_password}}</label>
+                        <div>
+                            <input class="z-input" type="password" placeholder="{{trans._register_placeholder.confirm_password}}" ng-model="reg_confirm_password" id="reg_confirm_password">
+                            <div>
+                                <span>* {{trans._bubble.confirm_password}}</span>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label>{{trans._register_placeholder.nickname}}</label>
+                        <div>
+                            <input class="z-input" type="text" placeholder="{{trans._register_placeholder.nickname}}" ng-model="reg_nickname" id="reg_nickname">
+                            <div>
+                                <span>* {{trans._bubble.nickname}}</span>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label>{{trans._register_placeholder.email}}</label>
+                        <div>
+                            <input class="z-input" type="text"  placeholder="{{trans._register_placeholder.email}}" ng-model="reg_email">
+                            <div>
+                                <span>* {{trans._bubble.email}}</span>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label>{{trans._register_placeholder.mobile_phone}}</label>
+                        <div>
+                            <input class="z-input" type="text"  placeholder="{{trans._register_placeholder.mobile_phone}}" ng-model="reg_mobile">
+                            <div>
+                                <span>* {{trans._bubble.phone}}</span>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label>{{trans.bank}}</label>
+                        <div>
+                            <select ng-model="reg_bank_name">
+                                <option value selected="selected">{{trans.selection}}</option>
+                                <option ng-repeat="item in bank" value="{{item}}" >{{item}}</option>
+                            </select>
+                            <div>
+                                <span>* {{trans._bubble.bank}}</span>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label>{{trans._register_placeholder.acc_num}}</label>
+                        <div>
+                            <input class="z-input" type="text" placeholder="{{trans._register_placeholder.acc_num}}" ng-model="reg_account_number">
+                            <div>
+                                <span>* {{trans._bubble.acc_num}}</span>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label>{{trans._register_placeholder.acc_name}}</label>
+                        <div>
+                            <input class="z-input" type="text" placeholder="{{trans._register_placeholder.acc_name}}" ng-model="reg_account_name">
+                            <div>
+                                <span>* {{trans._bubble.acc_name}}</span>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label>{{trans._register_placeholder.exchange}}</label>
+                        <div>
+                            <input class="z-input" type="text"  placeholder="{{trans._register_placeholder.exchange}}" ng-model="reg_exchange_pin">
+                            <div>
+                                <span>* {{trans._bubble.exchange_pin}}</span>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label>{{trans._register_placeholder.agentid}}</label>
+                        <div>
+                            <input class="z-input" type="text" placeholder="{{trans._register_placeholder.agentid}}" ng-model="reg_agent_id">
+                            <div>
+                                <span>* {{trans._bubble.agent_id}}</span>
+                            </div>
+                        </div>
+                    </div>
+                <div class="box-divider mb-60"></div>
+                
+            </div>
+            <button class="submit mb-30 custom-round" ng-click="register(trans)">{{trans.join}}</button>
+        </div>
+        </div>
+
+        <div class="popup-content no-overflow" ng-controller=""  ng-if="modal_id == 'coupon'" id="coupon" >
+                <div class="content">
+                    <div class="box-form">
+                        <div class="form-group" style="text-align:center;">
+                            <label style="float:none;line-height: 18px;vertical-align: top; text-align:center;color:#DDD;position:relative;margin-bottom:0px;font-weight:900;display:inline-block;"  ng-bind="trans._coupon.coupon_code"></label>
+                            <div style="float:none; width:initial">
+                                <input  ng-model="coupon_code" placeholder="{{'  ex. 2dBecg'}}" style="font-size:14px; height:initial;width:initial;" type="text" >
+                            </div>
+
+                        </div>
+
+                    <button class="submit custom-round" ng-click="exchangeCoupon()">{{trans._coupon.button}}</button>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
